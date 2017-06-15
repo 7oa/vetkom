@@ -18,7 +18,7 @@ if ($isAuthPage) {
         <link rel="stylesheet" href="<?= TEMPLATE_PATH ?>/css/bootstrap.min.css">
         <link rel="stylesheet" href="<?= TEMPLATE_PATH ?>/css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="<?= TEMPLATE_PATH ?>/css/bootstrap-datetimepicker.min.css">
-        <link rel="stylesheet" href="<?= TEMPLATE_PATH ?>/template_styles.css?3">
+        <link rel="stylesheet" href="<?= TEMPLATE_PATH ?>/template_styles.css?7">
         <script src="<?= TEMPLATE_PATH ?>/js/jquery-1.10.1.min.js"></script>
         <script src="<?= TEMPLATE_PATH ?>/js/bootstrap.min.js"></script>
         <script src="<?= TEMPLATE_PATH ?>/js/moment-with-locales.min.js"></script>
@@ -26,7 +26,7 @@ if ($isAuthPage) {
         <script src="<?= TEMPLATE_PATH ?>/js/jquery.tablesorter.min.js"></script>
         <script src="<?= TEMPLATE_PATH ?>/js/jquery.tablesorter.pager.js"></script>
         <script src="<?= TEMPLATE_PATH ?>/js/bootstrap-checkbox.min.js"></script>
-        <script src="<?= TEMPLATE_PATH ?>/js/functions.js?3"></script>
+        <script src="<?= TEMPLATE_PATH ?>/js/functions.js?7"></script>
         <script src="<?= TEMPLATE_PATH ?>/js/scrollup.js"></script>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

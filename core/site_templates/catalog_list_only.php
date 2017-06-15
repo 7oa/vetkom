@@ -4,20 +4,6 @@ print_r($arResult);
 echo "</pre>";*/
 ?>
 
-<?if(!empty($arResult["BRENDS"])):?>
-    <div class="brends-list">
-        <?if(is_array($arResult["BRENDS"])):
-        foreach($arResult["BRENDS"] as $key=>$brends):?>
-            <?if($brends):?>
-                <div class="brends-list__item opnElements" data-id='<?=$arResult["ID"]?>' data-brand='<?=$brends?>'><?=$brends?></div>
-            <?endif;?>
-        <?endforeach;?>
-        <?else:?>
-            <div class="brends-list__item opnElements" data-id='<?=$arResult["ID"]?>' data-brand='<?=$arResult["BRENDS"]?>'><?=$arResult["BRENDS"]?></div>
-        <?endif;?>
-    </div>
-<?endif?>
-    <div class="items-list">
 <?if (!empty($arResult["ITEMS"])) {
     ?>
 
@@ -106,4 +92,3 @@ echo "</pre>";*/
     else
         echo '<span>У выбранного раздела отсутствуют элементы</span>';
 }?>
-    </div>

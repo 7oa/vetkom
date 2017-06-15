@@ -9,8 +9,11 @@ $client = new SoapClient("http://213.141.157.162:1331/db_erp/ws/ssok_srv.1cws?ws
 
 ini_set("soap.wsdl_cache_enabled", "0");
 
-$res = $client->GetProductsTypes(array('Input' => ''));
-$res2 = $client->GetProductsTypes(array('Input' => 'd'));
+/*$res = $client->GetProductsTypes(array('Input' => ''));
+$res2 = $client->GetProductsTypes(array('Input' => 'd'));*/
 
-$brends = $client->GetBrands(array('TypeID' => '164eb2b0-9259-11db-9032-0016171cc02f'));
+//$params = array('id' => '164eb291-9259-11db-9032-0016171cc02f', 'price_id' => '96cb233d-7bb0-11e5-b1b8-005056c00008', 'priceGroupDetal' => false, 'agreement_id' => '96cb233d-7bb0-11e5-b1b8-005056c00008', 'Brand' => 'Philips');
+$brends = $client->GetBrands(array("TypeID"=>""));
+
+//echo '<pre>'; print_r($params);echo '</pre>';
 echo '<pre>'; print_r($brends);echo '</pre>';

@@ -14,12 +14,11 @@ if($docs["bindata"]) {
 ?>
 <div class="col-xs-3 leftMenu">
     <div class="all-brends">
-        <a href="#" class="all-brends-link">Все бренды</a>
+        <div class="all-brands-link ajax-all-brands">Все бренды</div>
     </div>
     <form class="group-search ajax-search-group">
         <div class="group-search__input">
             <input type="text" class="form-control" id="search-brend" placeholder="Поиск по группе">
-
             <input type="reset" class="btn btn-primary ajax-reset-brend" value="Сброс">
         </div>
     </form>

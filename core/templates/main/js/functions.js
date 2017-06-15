@@ -145,22 +145,37 @@ $(document).ready(function () {
         var a = $(this);
         var id = $(this).data("id");
         var change = $("#areVal").val();
+		var brand = $(this).data("brand");
+		console.log(brand == undefined);
         if($('#areVal').prop('checked')) var checked = change;
         else var checked = "N";
         $.ajax({
             type: "POST",
             url: catalogUri,
-            data: {id: id, checked: checked, TYPE: 'list'},
+            data: {id: id, checked: checked, brand: brand, TYPE: 'list'},
             beforeSend: function () {
-                $("body").animate({"scrollTop":0},"slow");
-                $(".divTable").empty();
-                $(".divTable").append("<div class='windows8'></div>");
+                if(brand != undefined){
+					$(".items-list").empty();
+					$(".items-list").append("<div class='windows8'></div>");
+				}
+				else{
+					$("body").animate({"scrollTop":0},"slow");
+					$(".divTable").empty();
+					$(".divTable").append("<div class='windows8'></div>");
+				}
             },
             success: function (data) {
-                $("#catalogKey").html(id);
-                $(".divTable").empty();
-                $(".windows8").css("display", "none");
-                $(".divTable").append(data);
+				$("#catalogKey").html(id);
+				if(brand != undefined){
+					$(".items-list").empty();
+					$(".windows8").css("display", "none");
+					$(".items-list").append(data);
+				}
+				else{
+					$(".divTable").empty();
+					$(".windows8").css("display", "none");
+					$(".divTable").append(data);
+				}
                 sort();
 
             }
@@ -1037,7 +1052,7 @@ $(document).ready(function () {
     });
 
     /******************** END USER ACTIONS ***************/
-	
+
     //14.06.2017
 	// Поиск по группам
 	$(document).on('submit', '.ajax-search-group', function () {
@@ -1076,5 +1091,19 @@ $(document).ready(function () {
 			}
 		});
 		return false;
+	});
+
+	$(document).on('click', '.ajax-all-brands', function(){
+		$.ajax({
+			type: "POST",
+			url: catalogUri,
+			data: {value: "", TYPE: 'allBrends'},
+			beforeSend: function () {
+				$(".divTable").empty();
+			},
+			success: function (data) {
+				$(".divTable").append(data);
+			}
+		});
 	});
 });

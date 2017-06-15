@@ -365,7 +365,20 @@ table#favoritSort thead tr .headerSortUp {
 .brends-list__item{
 	width: 20%;
 	flex: 0 0 auto;
+	color: #428bca;
+	cursor: pointer;
 }
 .ajax-search-brend{
 	display: none;
+}
+.all-brands-link{
+	color: #428bca;
+	cursor: pointer;
+}
+.brend-alph{
+	color: #428bca;
+	cursor: pointer;
+}
+.brends-alph-list{
+	margin-bottom: 20px;
 }

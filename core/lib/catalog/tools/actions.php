@@ -20,8 +20,12 @@ $byID = array('id' => $data["id"], 'price_id' => $price_id);
 
 switch ($data['TYPE']) {
     case 'list':
-        $products["ITEMS"] = $catalog->getResult('GetProductList', array('id' => $data["id"], 'price_id' => $price_id, 'priceGroupDetal' => $group_det, 'agreement_id' => $agreement));
-        $products["DEF_PRICE"] = $def_price;
+    	$params = array('id' => $data["id"], 'price_id' => $price_id, 'priceGroupDetal' => $group_det, 'agreement_id' => $agreement, 'Brand' => $data["brand"]);
+        $products["ITEMS"] = $catalog->getResult('GetProductList', $params);
+		//echo "<pre>"; print_r($params);echo "</pre>";
+		//echo "<pre>"; print_r($arUser);echo "</pre>";
+		$products['ID'] = $data["id"];
+		$products["DEF_PRICE"] = $def_price;
         $products['CHECKED'] = $data['checked'];
         //проверка, добавлен ли товар в избранное
         $connect = DataBase::getConnection();
@@ -33,10 +37,18 @@ switch ($data['TYPE']) {
             else
                 $oneProduct['favorits'] = $check_favorits['TYPE'];
         }
+		if($data["brand"]) Template::includeTemplate('catalog_list_only', $products);
+		else{
+			$brends = $catalog->getResult('GetBrands', array("TypeID"=>$data['id']));
+			$products["BRENDS"] = $brends["Strings"];
+			Template::includeTemplate('catalog_list', $products);
+		}
+        break;
+	case 'allBrends':
 		$brends = $catalog->getResult('GetBrands', array("TypeID"=>$data['id']));
 		$products["BRENDS"] = $brends["Strings"];
-        Template::includeTemplate('catalog_list', $products);
-        break;
+		Template::includeTemplate('brands_list', $products);
+		break;
     case 'analogs':
         $analogs = $catalog->getResult('GetSimilarProducts', array('id' => $data['id'], 'price_id' => $price_id, 'priceGroupDetal' => $group_det, 'agreement_id' => $agreement));
         if ($analogs == false)
