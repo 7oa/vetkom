@@ -33,6 +33,8 @@ switch ($data['TYPE']) {
             else
                 $oneProduct['favorits'] = $check_favorits['TYPE'];
         }
+		$brends = $catalog->getResult('GetBrands', array("TypeID"=>$data['id']));
+		$products["BRENDS"] = $brends["Strings"];
         Template::includeTemplate('catalog_list', $products);
         break;
     case 'analogs':
@@ -79,6 +81,10 @@ switch ($data['TYPE']) {
         $products['CHECKED'] = $data['checked'];
         Template::includeTemplate('catalog_list', $products);
         break;
+	case 'searchBrend':
+		$search = Catalog::getInstance()->getResult('GetProductsTypes', array('Input' => $data["value"]));
+		Template::includeTemplate('group_res', $search);
+		break;
     case 'quant':
         $id = $data["id"];
         $skocks = $catalog->getResult('GetStocksByProduct', array('id' => $id));

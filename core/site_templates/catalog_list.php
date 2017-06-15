@@ -1,7 +1,24 @@
 <?php
+/*echo "<pre>";
+print_r($arResult);
+echo "</pre>";*/
+?>
 
-if (!empty($arResult["ITEMS"])) {
+<?if(!empty($arResult["BRENDS"])):?>
+    <div class="brends-list">
+        <?if(is_array($arResult["BRENDS"])):
+        foreach($arResult["BRENDS"] as $key=>$brends):?>
+            <div class="brends-list__item"><a href="#"><?=$brends?></a></div>
+        <?endforeach;?>
+        <?else:?>
+            <div class="brends-list__item"><a href="#"><?=$arResult["BRENDS"]?></a></div>
+        <?endif;?>
+    </div>
+<?endif?>
+
+<?if (!empty($arResult["ITEMS"])) {
     ?>
+
     <table class="table table-bordered tableCatalog allTable" id="catalogSort">
         <thead>
             <tr>

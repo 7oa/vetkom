@@ -343,3 +343,26 @@ table#favoritSort thead tr .headerSortUp {
     margin-top: 20px;
     border-radius:4px;
 }
+.group-search{
+	margin-bottom: 20px;
+}
+.group-search__input{
+	margin-bottom: 10px;
+	display: flex;
+	justify-content: space-between;
+}
+#search-brend{
+	margin-right: 10px;
+}
+.all-brends{
+	margin-bottom: 20px;
+}
+.brends-list{
+	display: flex;
+	flex-wrap: wrap;
+	margin-bottom: 20px;
+}
+.brends-list__item{
+	width: 20%;
+	flex: 0 0 auto;
+}

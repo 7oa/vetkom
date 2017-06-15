@@ -13,27 +13,29 @@ if($docs["bindata"]) {
 }
 ?>
 <div class="col-xs-3 leftMenu">
+    <div class="all-brends">
+        <a href="#" class="all-brends-link">Все бренды</a>
+    </div>
+    <form class="group-search">
+        <div class="group-search__input">
+            <input type="text" class="form-control" id="search-brend" placeholder="Поиск по группе">
+            <input type="submit" class="btn btn-primary ajax-search-brend" value="Найти">
+        </div>
+    </form>
     <ul class="nav catalogMenu">
         <?
-        $sections = Catalog::getInstance()->getResult('GetGroupList', array('id' => 0));
-        foreach ($sections as $value):
-            //$id = $value['id'];
-            if($value['name']!="Обувь"):
-                $s = Catalog::getInstance()->getResult('GetGroupList', array('id' => $value['id']));
-            ?>
+        //$sections = Catalog::getInstance()->getResult('GetGroupList', array('id' => 0));
+		$sections = Catalog::getInstance()->getResult('GetProductsTypes', array('Input' => ''));
+        foreach ($sections as $value):?>
             <li>
-                <a href="#" data-id="<?= $value['id']; ?>" class="opnElements openCatalog">
+                <a href="#" data-id="<?= $value['id']; ?>" class="opnElements openCatalog opnBrends">
                     <?= $value['name']; ?>
-                    <?//php if (count($s) > 0) { ?>
+                    <?/*php if (count($s) > 0) { ?>
                         <span class="caret"></span>
-                    <?//php } ?>
+                    <?//php } */?>
                 </a>
-                <div class="menuOK">
-
-                </div>
             </li>
-        <? endif;
-        endforeach; ?>
+        <?endforeach; ?>
     </ul>
 
     <div class="youManager">
@@ -60,6 +62,7 @@ if($docs["bindata"]) {
         	Показывать только товары в наличии
         </label>-->
     </div>
+    <div class="brends-wrapper ajax-brends"></div>
     <div class="divTable">
 		<div class="catalogHelp">Выберите товар из каталога<br>или воспользуйтесь поиском</div>
     </div>
