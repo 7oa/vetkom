@@ -1037,25 +1037,21 @@ $(document).ready(function () {
     });
 
     /******************** END USER ACTIONS ***************/
-
-
+	
     //14.06.2017
 	// Поиск по группам
-	$(document).on('click', '.ajax-search-brend', function () {
+	$(document).on('submit', '.ajax-search-group', function () {
 		if ($("#search-brend").val().length > 2) {
-			var a=$(this);
 			var value = $("#search-brend").val();
 			$.ajax({
 				type: "POST",
 				url: catalogUri,
 				data: {value: value, TYPE: 'searchBrend'},
 				beforeSend: function () {
-					a.attr('disabled','disabled');
 					$(".catalogMenu").empty();
 				},
 				success: function (data) {
 					$(".catalogMenu").append(data);
-					a.removeAttr('disabled');
 				}
 			});
 

@@ -366,3 +366,6 @@ table#favoritSort thead tr .headerSortUp {
 	width: 20%;
 	flex: 0 0 auto;
 }
+.ajax-search-brend{
+	display: none;
+}
