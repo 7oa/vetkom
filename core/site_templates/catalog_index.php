@@ -22,13 +22,14 @@ if($docs["bindata"]) {
             <input type="reset" class="btn btn-primary ajax-reset-brend" value="Сброс">
         </div>
     </form>
+    <div>Все группы</div>
     <ul class="nav catalogMenu">
         <?
         //$sections = Catalog::getInstance()->getResult('GetGroupList', array('id' => 0));
 		$sections = Catalog::getInstance()->getResult('GetProductsTypes', array('Input' => ''));
         foreach ($sections as $value):?>
             <li>
-                <a href="#" data-id="<?= $value['id']; ?>" class="opnElements openCatalog opnBrends">
+                <a href="#" data-id="<?= $value['id']; ?>" class="openCatalog opnBrends ajax-brend-alph">
                     <?= $value['name']; ?>
                     <?/*php if (count($s) > 0) { ?>
                         <span class="caret"></span>

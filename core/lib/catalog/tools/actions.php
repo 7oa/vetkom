@@ -41,25 +41,30 @@ switch ($data['TYPE']) {
                 $oneProduct['favorits'] = $check_favorits['TYPE'];
 
 			//картинки
-			if($oneProduct["img_ext_mini"]){
+			if($oneProduct["img_mini"]){
 				$img_id = $oneProduct["id"];
-				$img = $oneProduct["img_ext_mini"];
+				$img = $oneProduct["img_mini"];
+				$ext = $oneProduct["img_mini_ext"];
 				$oneProduct["img_path"] = $catalog->checkPrevImage($img_id, $img, 'jpg');
 			}
 
         }
-		if($data["brand"]) Template::includeTemplate('catalog_list_only', $products);
-		else{
+		//if($data["brand"]){
+			if(!$data['id']) $products["GROUPS"] = "Y";
+			Template::includeTemplate('catalog_list', $products);
+		//}
+		/*else{
 			$brends = $catalog->getResult('GetBrands', array("TypeID"=>$data['id'], "FirstLetter" => $data['letter']));
 			$products["BRENDS"] = $brends["Strings"];
 			Template::includeTemplate('catalog_list', $products);
-		}
+		}*/
 		//echo "<pre>"; print_r($products);echo "</pre>";
         break;
 	case 'allBrends':
 		$brends = $catalog->getResult('GetBrands', array("TypeID"=>$data['id'], "FirstLetter" =>$data['letter']));
 		$products["BRENDS"] = $brends["Strings"];
-		if($data["letter"]){
+		if($data["letter"]||$data["id"]){
+			if ($data["id"]) $products["GROUP_ID"] = $data["id"];
 			Template::includeTemplate('brands_let_list', $products);
 		}
 		else Template::includeTemplate('brands_list', $products);

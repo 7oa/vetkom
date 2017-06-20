@@ -7,7 +7,7 @@ if(!empty($arResult["BRENDS"])):?>
 		<?if(is_array($arResult["BRENDS"])):
 			foreach($arResult["BRENDS"] as $key=>$brends):?>
 				<?if($brends):?>
-                    <div class="brends-list__item opnElements" data-brand='<?=$brends?>'><?=$brends?></div>
+                    <div class="brends-list__item opnElements" data-brand='<?=$brends?>' <?if($arResult["GROUP_ID"]):?>data-id='<?=$arResult["GROUP_ID"]?>'<?endif;?>><?=$brends?></div>
 				<?endif;?>
 			<?endforeach;?>
 		<?else:?>

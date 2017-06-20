@@ -3,82 +3,76 @@
 print_r($arResult);
 echo "</pre>";*/
 ?>
-
-<?if(!empty($arResult["BRENDS"])):?>
-    <div class="brends-list">
-        <?if(is_array($arResult["BRENDS"])):
-        foreach($arResult["BRENDS"] as $key=>$brends):?>
-            <?if($brends):?>
-                <div class="brends-list__item opnElements" data-id='<?=$arResult["ID"]?>' data-brand='<?=$brends?>'><?=$brends?></div>
-            <?endif;?>
-        <?endforeach;?>
-        <?else:?>
-            <div class="brends-list__item opnElements" data-id='<?=$arResult["ID"]?>' data-brand='<?=$arResult["BRENDS"]?>'><?=$arResult["BRENDS"]?></div>
-        <?endif;?>
-    </div>
-<?endif?>
-    <div class="items-list">
 <?if (!empty($arResult["ITEMS"])) {
-    ?>
-
-    <table class="table table-bordered tableCatalog allTable" id="catalogSort">
+	foreach ($arResult["ITEMS"] as $oneProduct){
+		$group[$oneProduct["group_name"]][] = $oneProduct;
+	}
+	?>
+    <table class="table table-bordered tableCatalog allTable" id="">
         <thead>
-            <tr>
-                <th>Название</th>
-                <? if ($_COOKIE['SHOW_S'] !== 'N'): ?>
-                    <th width="80">Кол-во</th>
-                <? endif; ?>
-                <th width="100">Цена</th>
-                <th width="80">Аналоги</th>
-                <? if ($arResult["DEF_PRICE"] == 1): ?><th width="100">Розничная</th><? endif; ?>
-                <th width="130">Заказ</th>
-            </tr>
+        <tr>
+            <th>Название</th>
+			<? if ($_COOKIE['SHOW_S'] !== 'N'): ?>
+                <th width="80">Кол-во</th>
+			<? endif; ?>
+            <th width="100">Цена</th>
+            <th width="80">Аналоги</th>
+			<? if ($arResult["DEF_PRICE"] == 1): ?><th width="100">Розничная</th><? endif; ?>
+            <th width="130">Заказ</th>
+        </tr>
         </thead>
         <tbody>
-            <? foreach ($arResult["ITEMS"] as $oneProduct): ?>
-                <?php
-                $check = $arResult['CHECKED'];
-                ob_start();
-                ?>
-                <tr data-id="<?= $oneProduct["id"] ?>" class="element">
+		<? foreach ($group as $key=>$arGroup){ ?>
+			<?php
+			$check = $arResult['CHECKED'];
+			ob_start();
+			?>
+			<?if($arResult["GROUPS"]=="Y"):?>
+                <tr>
+                    <td colspan="4"><h4><?=$key?></h4></td>
+                </tr>
+			<?endif;?>
+			<?foreach($arGroup as $pr_key=>$oneProduct):?>
+                <tr data-id="<?= $oneProduct["id"] ?>" class="element" data-key="<?=$key?>">
                     <td>
-                        <div class="pull-right">		
-                            <button 
-                                data-id="<?= $oneProduct['id'] ?>" 
-                                data-price="<?= $oneProduct["price"] ?>" 
-                                data-name='<?= $oneProduct['name'] ?>' 
-                                data-quantity="<?= $oneProduct['quantity'] ?>"
-                                data-art="<?= $oneProduct['art'] ?>" 
-                                class="btn btn-xs btn-default favoritKey" 
-                                type="button"
-                                data-toggle="tooltip"
-                                data-placement="top"
-                                title="Добавить в избранное">
-                                <span 
-                                <?php if ($oneProduct['favorits'] == 0) { ?>
+                        <div class="pull-right">
+                            <button
+                                    data-id="<?= $oneProduct['id'] ?>"
+                                    data-price="<?= $oneProduct["price"] ?>"
+                                    data-name='<?= $oneProduct['name'] ?>'
+                                    data-quantity="<?= $oneProduct['quantity'] ?>"
+                                    data-art="<?= $oneProduct['art'] ?>"
+                                    class="btn btn-xs btn-default favoritKey"
+                                    type="button"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    title="Добавить в избранное">
+                                <span
+									<?php if ($oneProduct['favorits'] == 0) { ?>
                                         class="glyphicon glyphicon-star-empty"
-                                    <?php } else { ?>
+									<?php } else { ?>
                                         class="glyphicon glyphicon-star"
-                                    <?php } ?>
-                                    ></span>
+									<?php } ?>
+                                ></span>
                             </button>
                         </div>
-                        <?if($oneProduct["img_path"]):?>
+
+						<?if($oneProduct["img_path"]):?>
                             <img src="<?=$oneProduct["img_path"]?>" alt="" class="element__prev-img">
-                        <?endif;?>
+						<?endif;?>
 
                         <a href="#detailCard" data-toggle="modal" class="detailCard" data-id="<?= $oneProduct["id"] ?>"><?= $oneProduct["name"] ?></a>
                         <br/><small class="art"><?= $oneProduct["art"] ?></small>
 
                     </td>
-                    <? if ($_COOKIE['SHOW_S'] !== 'N'): ?>
+					<? if ($_COOKIE['SHOW_S'] !== 'N'): ?>
                         <td class="text-right"><a href="#detailCity" class="moreByCity" data-toggle="modal" data-id="<?= $oneProduct["id"] ?>"><?= $oneProduct["quantity"] ?></a></td>
-                    <? endif; ?>
+					<? endif; ?>
                     <td class="text-right"><?= number_format($oneProduct["price"], 2, '.', ''); ?></td>
                     <td class="text-center">
                         <button type="button" class="btn btn-default openAnalogModal" data-id="<?= $oneProduct['id'] ?>" data-toggle="modal" data-target="#analogModal"><span class="glyphicon glyphicon-transfer"></span></button>
                     </td>
-                    <? if ($arResult["DEF_PRICE"] == 1): ?><td class="text-right"><?= number_format($oneProduct["priceDefault"], 2, '.', ''); ?></td><? endif; ?>
+					<? if ($arResult["DEF_PRICE"] == 1): ?><td class="text-right"><?= number_format($oneProduct["priceDefault"], 2, '.', ''); ?></td><? endif; ?>
                     <td>
                         <div class="input-group">
                             <input type="number" data-id="<?= $oneProduct["id"] ?>" class="form-control cnt-basket" value="1" placeholder="1" min="1" max="<?= $quantity; ?>">
@@ -88,25 +82,24 @@ echo "</pre>";*/
                         </div>
                     </td>
                 </tr>
-                <?php
-                $content = ob_get_clean();
-                if ($check == "Y") {
-                    if ($oneProduct['quantity'] > 0) {
-                        echo $content;
-                    }
-                } else {
-                    echo $content;
-                }
-                ?>
-            <? endforeach; ?>
+			<? endforeach; ?>
+			<?php
+			$content = ob_get_clean();
+			if ($check == "Y") {
+				if ($oneProduct['quantity'] > 0) {
+					echo $content;
+				}
+			} else {
+				echo $content;
+			}
+			?>
+		<?}?>
         </tbody>
     </table>
-
-    <?
+	<?
 } else {
-    if ($arResult["SEARCH"] == "Y")
-        echo '<span>По Вашему запросу ничего не найдено</span>';
-    else
-        echo '<span>У выбранного раздела отсутствуют элементы</span>';
+	if ($arResult["SEARCH"] == "Y")
+		echo '<span>По Вашему запросу ничего не найдено</span>';
+	else
+		echo '<span>У выбранного раздела отсутствуют элементы</span>';
 }?>
-    </div>

@@ -147,7 +147,6 @@ $(document).ready(function () {
         var change = $("#areVal").val();
 		var brand = $(this).data("brand");
 		var letter = $(this).data("letter");
-		console.log(brand == undefined);
         if($('#areVal').prop('checked')) var checked = change;
         else var checked = "N";
         $.ajax({
@@ -1118,12 +1117,16 @@ $(document).ready(function () {
 	});
 
 	$(document).on('click', '.ajax-brend-alph', function(){
-		var letter = $(this).data("letter");
+		var a = $(this);
+		var letter = a.data("letter");
+		var id = a.data("id");
 		$.ajax({
 			type: "POST",
 			url: catalogUri,
-			data: {letter: letter, TYPE: 'allBrends'},
+			data: {letter: letter, id: id, TYPE: 'allBrends'},
 			beforeSend: function () {
+				if(id) $("body").animate({"scrollTop":0},"slow");
+				if($(a).hasClass("opnBrends")) $(".ajax-brends").empty();
 				$(".divTable").empty();
 				$(".divTable").append("<div class='windows8'></div>");
 			},
