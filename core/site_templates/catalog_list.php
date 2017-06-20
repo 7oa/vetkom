@@ -63,6 +63,9 @@ echo "</pre>";*/
                                     ></span>
                             </button>
                         </div>
+                        <?if($oneProduct["img_path"]):?>
+                            <img src="<?=$oneProduct["img_path"]?>" alt="" class="element__prev-img">
+                        <?endif;?>
 
                         <a href="#detailCard" data-toggle="modal" class="detailCard" data-id="<?= $oneProduct["id"] ?>"><?= $oneProduct["name"] ?></a>
                         <br/><small class="art"><?= $oneProduct["art"] ?></small>

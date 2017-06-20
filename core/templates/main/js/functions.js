@@ -98,7 +98,7 @@ $(document).ready(function () {
         $("#catalogSort")
                 .tablesorter({
                     sortList: [[0, 0]],
-                    headers: {3: {sorter: false}, 4: {sorter: false}},
+                    headers: {2: {sorter: false}, 3: {sorter: false}, 4: {sorter: false}},
                 });
         //.tablesorterPager({container: $("#pager")}); 
     }
@@ -146,13 +146,14 @@ $(document).ready(function () {
         var id = $(this).data("id");
         var change = $("#areVal").val();
 		var brand = $(this).data("brand");
+		var letter = $(this).data("letter");
 		console.log(brand == undefined);
         if($('#areVal').prop('checked')) var checked = change;
         else var checked = "N";
         $.ajax({
             type: "POST",
             url: catalogUri,
-            data: {id: id, checked: checked, brand: brand, TYPE: 'list'},
+            data: {id: id, checked: checked, brand: brand, letter: letter, TYPE: 'list'},
             beforeSend: function () {
                 if(brand != undefined){
 					$(".items-list").empty();
@@ -160,6 +161,7 @@ $(document).ready(function () {
 				}
 				else{
 					$("body").animate({"scrollTop":0},"slow");
+					$(".ajax-brends").empty();
 					$(".divTable").empty();
 					$(".divTable").append("<div class='windows8'></div>");
 				}
@@ -1075,7 +1077,7 @@ $(document).ready(function () {
 	});
 	// Сброс поиска по группам
 	$(document).on('click', '.ajax-reset-brend', function () {
-		var a=$(this);
+		var a = $(this);
 		$("#search-brend").val("");
 		$.ajax({
 			type: "POST",
@@ -1083,7 +1085,7 @@ $(document).ready(function () {
 			data: {value: "", TYPE: 'searchBrend'},
 			beforeSend: function () {
 				a.attr('disabled','disabled');
-				$(".catalogMenu").empty();
+				//$(".divTable").empty();
 			},
 			success: function (data) {
 				$(".catalogMenu").append(data);
@@ -1094,14 +1096,40 @@ $(document).ready(function () {
 	});
 
 	$(document).on('click', '.ajax-all-brands', function(){
+		var a = $(this);
 		$.ajax({
 			type: "POST",
 			url: catalogUri,
-			data: {value: "", TYPE: 'allBrends'},
+			data: {id: "", TYPE: 'allBrends'},
 			beforeSend: function () {
+				$(".ajax-brends").empty();
 				$(".divTable").empty();
+				$(".divTable").append("<div class='windows8'></div>");
+				a.css("pointer-events","none");
+
 			},
 			success: function (data) {
+				$(".windows8").css("display", "none");
+				$(".divTable").empty();
+				$(".ajax-brends").append(data);
+				a.css("pointer-events","auto");
+			}
+		});
+	});
+
+	$(document).on('click', '.ajax-brend-alph', function(){
+		var letter = $(this).data("letter");
+		$.ajax({
+			type: "POST",
+			url: catalogUri,
+			data: {letter: letter, TYPE: 'allBrends'},
+			beforeSend: function () {
+				$(".divTable").empty();
+				$(".divTable").append("<div class='windows8'></div>");
+			},
+			success: function (data) {
+				$(".windows8").css("display", "none");
+				$(".divTable").empty();
 				$(".divTable").append(data);
 			}
 		});

@@ -21,33 +21,48 @@ $byID = array('id' => $data["id"], 'price_id' => $price_id);
 switch ($data['TYPE']) {
     case 'list':
     	$params = array('id' => $data["id"], 'price_id' => $price_id, 'priceGroupDetal' => $group_det, 'agreement_id' => $agreement, 'Brand' => $data["brand"]);
-        $products["ITEMS"] = $catalog->getResult('GetProductList', $params);
+        $products["ITEMS"] = $catalog->getResult('GetProductList', $params, true);
 		//echo "<pre>"; print_r($params);echo "</pre>";
 		//echo "<pre>"; print_r($arUser);echo "</pre>";
 		$products['ID'] = $data["id"];
-		$products["DEF_PRICE"] = $def_price;
+		$products['DEF_PRICE'] = $def_price;
         $products['CHECKED'] = $data['checked'];
         //проверка, добавлен ли товар в избранное
         $connect = DataBase::getConnection();
         foreach ($products["ITEMS"] as $key => &$oneProduct) {
+			$oneProduct = (array) $oneProduct;
+
+
             $pId = $oneProduct['id'];
             $check_favorits = $connect->query("SELECT * FROM `favorits` WHERE `USER_ID` = '$USER_ID' AND `PRODUCT_ID` = '$pId'")->fetchRaw();
             if ($check_favorits == false)
                 $oneProduct['favorits'] = 0;
             else
                 $oneProduct['favorits'] = $check_favorits['TYPE'];
+
+			//картинки
+			if($oneProduct["img_ext_mini"]){
+				$img_id = $oneProduct["id"];
+				$img = $oneProduct["img_ext_mini"];
+				$oneProduct["img_path"] = $catalog->checkPrevImage($img_id, $img, 'jpg');
+			}
+
         }
 		if($data["brand"]) Template::includeTemplate('catalog_list_only', $products);
 		else{
-			$brends = $catalog->getResult('GetBrands', array("TypeID"=>$data['id']));
+			$brends = $catalog->getResult('GetBrands', array("TypeID"=>$data['id'], "FirstLetter" => $data['letter']));
 			$products["BRENDS"] = $brends["Strings"];
 			Template::includeTemplate('catalog_list', $products);
 		}
+		//echo "<pre>"; print_r($products);echo "</pre>";
         break;
 	case 'allBrends':
-		$brends = $catalog->getResult('GetBrands', array("TypeID"=>$data['id']));
+		$brends = $catalog->getResult('GetBrands', array("TypeID"=>$data['id'], "FirstLetter" =>$data['letter']));
 		$products["BRENDS"] = $brends["Strings"];
-		Template::includeTemplate('brands_list', $products);
+		if($data["letter"]){
+			Template::includeTemplate('brands_let_list', $products);
+		}
+		else Template::includeTemplate('brands_list', $products);
 		break;
     case 'analogs':
         $analogs = $catalog->getResult('GetSimilarProducts', array('id' => $data['id'], 'price_id' => $price_id, 'priceGroupDetal' => $group_det, 'agreement_id' => $agreement));

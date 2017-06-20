@@ -18,17 +18,13 @@ echo "</pre>";*/
     <div class="brends-alph-list">
         <div>|
 			<?foreach($norus as $brends):?>
-                <span class="brend-alph"><?=$brends?></span> |
+                <span class="brend-alph ajax-brend-alph" data-letter="<?=$brends?>"><?=$brends?></span> |
 			<?endforeach;?>
         </div>
         <div>|
 			<?foreach($rus as $brends):?>
-                <span class="brend-alph"><?=$brends?></span> |
+                <span class="brend-alph ajax-brend-alph" data-letter="<?=$brends?>"><?=$brends?></span> |
 			<?endforeach;?>
         </div>
     </div>
 <?endif?>
-<div class="brends-list">
-</div>
-<div class="items-list">
-</div>

@@ -30,6 +30,15 @@ class Catalog extends DataManager {
         return $path;
     }
 
+	public function checkPrevImage($img_id, $img, $img_ext) {
+		$filename = 'prev_' . trim($img_id);
+		$path = $_SERVER['DOCUMENT_ROOT'] . '/images/' . $filename . '.' . $img_ext;
+		$file = iconv('utf-8', 'windows-1251', $path);
+		file_put_contents($file, $img);
+		$out_path = 'images/' . $filename . '.' . $img_ext;
+		return $out_path;
+	}
+
     public static function checkElement($result) {
         if (array_key_exists(static::NAME, $result) && array_key_exists(0, $result[static::NAME]))
             return $result[static::NAME];
