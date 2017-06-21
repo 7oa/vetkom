@@ -260,6 +260,7 @@ $(document).ready(function () {
                 data: {req: req, value: value, checked: checked, TYPE: 'search'},
                 beforeSend: function () {
                     a.attr('disabled','disabled');
+					$(".ajax-brends").empty();
                     $(".divTable").empty();
                     $(".divTable").append("<div class='windows8'></div>");
                     //$(".windows8").css("display", "block");

@@ -107,10 +107,22 @@ switch ($data['TYPE']) {
         break;
     case 'search':
         $search = array('req' => $data["req"], 'value' => $data["value"], 'price_id' => $price_id, 'priceGroupDetal' => $group_det, 'agreement_id' => $agreement);
-        $products["ITEMS"] = $catalog->getResult('FindProductsBy', $search);
+        $products["ITEMS"] = $catalog->getResult('FindProductsBy', $search, true);
+		foreach ($products["ITEMS"] as $key => &$oneProduct) {
+			$oneProduct = (array) $oneProduct;
+			//картинки
+			if($oneProduct["img_mini"]){
+				$img_id = $oneProduct["id"];
+				$img = $oneProduct["img_mini"];
+				$ext = $oneProduct["img_mini_ext"];
+				$oneProduct["img_path"] = $catalog->checkPrevImage($img_id, $img, 'jpg');
+			}
+
+		}
         $products["DEF_PRICE"] = $def_price;
         $products["SEARCH"] = "Y";
         $products['CHECKED'] = $data['checked'];
+		//echo "<pre>"; print_r($products);echo "</pre>";
         Template::includeTemplate('catalog_list', $products);
         break;
 	case 'searchBrend':
