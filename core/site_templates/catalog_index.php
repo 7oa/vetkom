@@ -25,15 +25,14 @@ if($docs["bindata"]) {
     <div>Все группы</div>
     <ul class="nav catalogMenu">
         <?
-        //$sections = Catalog::getInstance()->getResult('GetGroupList', array('id' => 0));
-		$sections = Catalog::getInstance()->getResult('GetProductsTypes', array('Input' => ''));
+		$sections = Catalog::getInstance()->getResult('GetGroupList', array('id' =>'', 'Input' => ''));
         foreach ($sections as $value):?>
             <li>
-                <a href="#" data-id="<?= $value['id']; ?>" class="openCatalog opnBrends ajax-brend-alph">
+                <a href="#" data-id="<?= $value['id']; ?>" data-group="<?=$value['isGroup']?>" class="openCatalog opnBrends<?if(!$value['isGroup']):?> ajax-brend-alph<?endif;?>">
                     <?= $value['name']; ?>
-                    <?/*php if (count($s) > 0) { ?>
+                    <? if ($value['isGroup']) { ?>
                         <span class="caret"></span>
-                    <?//php } */?>
+                    <? } ?>
                 </a>
             </li>
         <?endforeach; ?>

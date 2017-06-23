@@ -116,26 +116,28 @@ $(document).ready(function () {
 
         var a = $(this);
         var id = a.data("id");
+		var isGroup = a.data("group");
+		if(isGroup){
+			$.ajax({
+				type: "POST",
+				url: catalogUri,
+				data: {id: id, TYPE: 'section'},
+				success: function (data) {
+					if(data!="") {
+						a.removeClass("openCatalog").addClass("closeCatalog")
+							//.removeClass("opnElements").addClass("closeElements")
+							.parent().append(data);
 
-        $.ajax({
-            type: "POST",
-            url: catalogUri,
-            data: {id: id, TYPE: 'section'},
-            success: function (data) {
-                if(data!="") {
-                    a.removeClass("openCatalog").addClass("closeCatalog")
-                    .removeClass("opnElements").addClass("closeElements")
-                    .parent().append(data);
-
-                }
-            }
-        });
+					}
+				}
+			});
+		}
         return false;
     });
     $(document).on('click', '.closeCatalog', function () {
         var a = $(this);
         a.removeClass("closeCatalog").addClass("openCatalog")
-            .removeClass("closeElements").addClass("opnElements")
+            //.removeClass("closeElements").addClass("opnElements")
             .parent().find("ul").remove();
 
         return false;
@@ -1085,7 +1087,7 @@ $(document).ready(function () {
 			data: {value: "", TYPE: 'searchBrend'},
 			beforeSend: function () {
 				a.attr('disabled','disabled');
-				//$(".divTable").empty();
+				$(".catalogMenu").empty();
 			},
 			success: function (data) {
 				$(".catalogMenu").append(data);
@@ -1094,7 +1096,7 @@ $(document).ready(function () {
 		});
 		return false;
 	});
-
+	//все бренды
 	$(document).on('click', '.ajax-all-brands', function(){
 		var a = $(this);
 		$.ajax({
@@ -1116,26 +1118,29 @@ $(document).ready(function () {
 			}
 		});
 	});
-
+	//список брендов
 	$(document).on('click', '.ajax-brend-alph', function(){
 		var a = $(this);
-		var letter = a.data("letter");
-		var id = a.data("id");
-		$.ajax({
-			type: "POST",
-			url: catalogUri,
-			data: {letter: letter, id: id, TYPE: 'allBrends'},
-			beforeSend: function () {
-				if(id) $("body").animate({"scrollTop":0},"slow");
-				if($(a).hasClass("opnBrends")) $(".ajax-brends").empty();
-				$(".divTable").empty();
-				$(".divTable").append("<div class='windows8'></div>");
-			},
-			success: function (data) {
-				$(".windows8").css("display", "none");
-				$(".divTable").empty();
-				$(".divTable").append(data);
-			}
-		});
+		var isGroup = a.data("group");
+		if(!isGroup){
+			var letter = a.data("letter");
+			var id = a.data("id");
+			$.ajax({
+				type: "POST",
+				url: catalogUri,
+				data: {letter: letter, id: id, TYPE: 'allBrends'},
+				beforeSend: function () {
+					if(id) $("body").animate({"scrollTop":0},"slow");
+					if($(a).hasClass("opnBrends")) $(".ajax-brends").empty();
+					$(".divTable").empty();
+					$(".divTable").append("<div class='windows8'></div>");
+				},
+				success: function (data) {
+					$(".windows8").css("display", "none");
+					$(".divTable").empty();
+					$(".divTable").append(data);
+				}
+			});
+		}
 	});
 });

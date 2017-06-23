@@ -3,23 +3,6 @@
 	$config = parse_ini_file($_SERVER['DOCUMENT_ROOT']."/config.ini");
 	require_once $_SERVER['DOCUMENT_ROOT']."/core/tools/send.php";
 
-	/*
-	$arrg = array(
-			"partner1" => "Протон",
-	    	"login1" => "opt1",
-	    	"password1" => "demo2",
-	    	"email1" => "7oa@mail.ru",
-	    	"partner2" => "Альфа-Протон",
-	    	"login2" => "demo",
-	    	"password2" => "demo",
-	    	"email2" => "semenova.7oa@yandex.ru",
-	    	"partner3" => "Видео маркет ООО",
-	    	"login3" => "opt",
-	    	"password3" => "1234",
-	    	"email3" => "bleachsan@mail.ru"
-		);
-	*/
-
 	$num = 0;
 	foreach($_POST as $key=>$arPost) {
 		$keyNum = substr($key, -1);

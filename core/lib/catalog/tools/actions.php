@@ -22,8 +22,6 @@ switch ($data['TYPE']) {
     case 'list':
     	$params = array('id' => $data["id"], 'price_id' => $price_id, 'priceGroupDetal' => $group_det, 'agreement_id' => $agreement, 'Brand' => $data["brand"]);
         $products["ITEMS"] = $catalog->getResult('GetProductList', $params, true);
-		//echo "<pre>"; print_r($params);echo "</pre>";
-		//echo "<pre>"; print_r($arUser);echo "</pre>";
 		$products['ID'] = $data["id"];
 		$products['DEF_PRICE'] = $def_price;
         $products['CHECKED'] = $data['checked'];
@@ -49,16 +47,8 @@ switch ($data['TYPE']) {
 			}
 
         }
-		//if($data["brand"]){
-			if(!$data['id']) $products["GROUPS"] = "Y";
-			Template::includeTemplate('catalog_list', $products);
-		//}
-		/*else{
-			$brends = $catalog->getResult('GetBrands', array("TypeID"=>$data['id'], "FirstLetter" => $data['letter']));
-			$products["BRENDS"] = $brends["Strings"];
-			Template::includeTemplate('catalog_list', $products);
-		}*/
-		//echo "<pre>"; print_r($products);echo "</pre>";
+		if(!$data['id']) $products["GROUPS"] = "Y";
+		Template::includeTemplate('catalog_list', $products);
         break;
 	case 'allBrends':
 		$brends = $catalog->getResult('GetBrands', array("TypeID"=>$data['id'], "FirstLetter" =>$data['letter']));
@@ -77,8 +67,8 @@ switch ($data['TYPE']) {
             Template::includeTemplate('catalog_analogs', $analogs);
         break;
     case 'section':
-        $sections = $catalog->getResult('GetGroupList', $byID);
-
+    	$params = array('id' => $data["id"], 'Input' => '');
+        $sections = $catalog->getResult('GetGroupList', $params);
         $arrg = array();
         foreach ($sections as $value) {
             $arrg[$value['name']][0] = $value;
@@ -122,11 +112,10 @@ switch ($data['TYPE']) {
         $products["DEF_PRICE"] = $def_price;
         $products["SEARCH"] = "Y";
         $products['CHECKED'] = $data['checked'];
-		//echo "<pre>"; print_r($products);echo "</pre>";
         Template::includeTemplate('catalog_list', $products);
         break;
 	case 'searchBrend':
-		$search = Catalog::getInstance()->getResult('GetProductsTypes', array('Input' => $data["value"]));
+		$search = Catalog::getInstance()->getResult('GetGroupList', array('id' =>'', 'Input' => $data["value"]));
 		Template::includeTemplate('group_res', $search);
 		break;
     case 'quant':

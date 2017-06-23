@@ -1,8 +1,3 @@
-<?php
-/*echo "<pre>";
-print_r($arResult);
-echo "</pre>";*/
-?>
 <?if(is_array($arResult["BRENDS"])):
 	foreach ($arResult["BRENDS"] as $mas){
 		$alph[] = mb_substr( strtoupper($mas), 0, 1, 'utf-8' );
@@ -11,9 +6,6 @@ echo "</pre>";*/
 	sort($brands_alph);
 	$rus = preg_grep("/[А-Я]/u", $brands_alph);
 	$norus = preg_grep("/[^А-Я]/u", $brands_alph);
-
-	//echo "<pre>"; print_r($rus); echo "</pre>";
-	//echo "<pre>"; print_r($norus); echo "</pre>";
 	?>
     <div class="brends-alph-list">
         <div>|
