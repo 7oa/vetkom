@@ -58,7 +58,24 @@ if ($address){
         </div>
     </div>
 
+    <div class="row desDate text-right">
+		<?
+		$time = strtotime('+1 day');
+		$desDate= date("d.m.Y", $time);
+		?>
+        <div class="col-sm-12">
+            <h3>Желаемая дата выполнения заказа</h3>
+        </div>
+        <div class="col-sm-3 col-sm-offset-9">
+            <div class="input-group selectDate" id="zakazDateTo">
+                <input type="text" class="form-control order-desdate" value="<?=$desDate;?>">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button"><span class="glyphicon-calendar glyphicon"></span></button>
+                </span>
+            </div>
+        </div>
 
+    </div>
 
     <div class="row shipBlock text-right">
         <div class="col-sm-12">
@@ -73,18 +90,18 @@ if ($address){
                 </label>
                 <label>
                     <input type="radio" class="deliveryRadioOne" name="deliveryRadios" id="deliveryOptR2" value="1" data-id="1">
-                    До клиента
+                    Нужна доставка
                 </label>
-                <label>
-                    <input type="radio" class="deliveryRadioOne" name="deliveryRadios" id="deliveryOptR3" value="2" data-id="2">
-                    Силами перевозчика
-                </label>
+<!--                <label>-->
+<!--                    <input type="radio" class="deliveryRadioOne" name="deliveryRadios" id="deliveryOptR3" value="2" data-id="2">-->
+<!--                    Силами перевозчика-->
+<!--                </label>-->
             </div>
         </div>
 
 
 
-        <div class="col-sm-12">
+        <div class="col-sm-12 shipmentAddressBlock" style="display: none">
             <label for="shipAddress" class="text-left">Адрес доставки:</label><br/>
 
             <?if($arAddr):?>

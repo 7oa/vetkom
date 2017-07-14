@@ -27,6 +27,8 @@ $shipmentCompany = $data['shipmentCompany'];
 $comment = $data['comment'];
 switch ($type) {
     case 'add':
+		$desDate = $data['desDate'];
+		$comment.= "\n Желаемая дата выполнения заказа: ".$desDate;
         $params = array('filter' => array('USER_ID' => $USER_ID));
         $dbBacket = Basket::getList($params);
         $backet = $dbBacket->fetchAll();
@@ -61,6 +63,7 @@ switch ($type) {
             'guid' => ''
         );
         $addFields = array('user_id' => $USER_EXTERNAL_ID, 'order' => $orderFields);
+        //echo "<pre>"; print_r($addFields); echo "</pre>";
         $result = $order->getResult('AddOrder', $addFields);
         if ($result[0] == "Документ оформлен!") {
 

@@ -74,6 +74,8 @@ $(document).ready(function () {
     $(document).on("change","input[type=radio][name=deliveryRadios]", function() {
         if (this.value == '2') $(".shipmentCompanyBlock").show();
         else $(".shipmentCompanyBlock").hide();
+		if (this.value == '1') $(".shipmentAddressBlock").show();
+		else $(".shipmentAddressBlock").hide();
     });
 	
 
@@ -746,11 +748,12 @@ $(document).ready(function () {
         var shipAddress=$("#shipAddress").val();
         var shipmentCompany=$("#shipmentCompany").val();
         var comment=$("#commentOrder").val();
+        var desDate = $(".order-desdate").val();
         //a.addClass("disabled").removeClass("checkout");
         $.ajax({
             type: "POST",
             url: orderUri,
-            data: {TYPE: 'add', shipType: shipType, shipAddress: shipAddress, shipmentCompany: shipmentCompany, comment: comment},
+            data: {TYPE: 'add', shipType: shipType, shipAddress: shipAddress, shipmentCompany: shipmentCompany, comment: comment, desDate: desDate},
             beforeSend: function () {
                 //$(".backetDiv").empty();
                 $(".backetDiv").append("<div class='windows8'></div>");
