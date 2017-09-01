@@ -25,6 +25,8 @@
         $('a[data-toggle="tab"]:first').tab('show');
     }
 });*/
+//переключение на вкладку basket
+//$('a[href="#basket"]').tab('show');
 //Перевод в числовой формат
 function number_format(number, decimals, dec_point, thousands_sep) {
     number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
