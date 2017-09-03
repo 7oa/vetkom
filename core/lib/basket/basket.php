@@ -6,11 +6,18 @@ class Basket extends DataManager {
 
     protected $items = array(),
             $basketPrice = null,
+            $orderNum = null,
             $itemsCount = null;
 
     function __construct() {
         $items = $this->getItems(User::getID());
 
+        $USER_ID = User::getID();
+        $connect = DataBase::getConnection();
+        $isedit = $connect->query("SELECT * FROM `order_edit` WHERE `USER_ID` = '$USER_ID'")->fetchRaw();
+        if(!empty($isedit)){
+            $this->orderNum = $isedit["ORDER_NUM"];
+        }
         if ($items) {
             foreach ($items as $arItem)
                 $this->items[$arItem['PRODUCT_ID']] = $arItem;
@@ -21,8 +28,10 @@ class Basket extends DataManager {
                 $price += $arItem['PRICE'] * $arItem['QUANTITY'];
                 $arItem['FULL_PRICE'] = $arItem['PRICE'] * $arItem['QUANTITY'];
             endforeach;
+
             $this->basketPrice = $price;
             $this->itemsCount = sizeof($this->items);
+
         } else
             return false;
     }
@@ -141,6 +150,10 @@ class Basket extends DataManager {
 
     public function getBasketItems() {
         return $this->items;
+    }
+
+    public function getOrderNum(){
+        return $this->orderNum;
     }
 
     public function getPrice() {

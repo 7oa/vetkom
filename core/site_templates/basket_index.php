@@ -3,6 +3,7 @@ use Core\Main\User;
 $arBacket = $arResult->getBasketItems();
 $USER_ID = User::getID();
 $userInfo = User::getByID($USER_ID);
+$orderNum = $arResult->getOrderNum();
 $address=User::getInstance()->getResult('GetAddressesById', array('id' => $userInfo["EXTERNAL"]));
 if ($address){
     if (!is_array($address["Strings"]))
@@ -11,7 +12,12 @@ if ($address){
         $arAddr = $address["Strings"];
 }
 ?>
-<h1>Текущий заказ</h1>
+<?//echo "<pre>";print_r($arResult);echo "</pre>";?>
+<?if($orderNum):?>
+    <h1>Редактирование заказа <?=$orderNum?></h1>
+<?else:?>
+    <h1>Текущий заказ</h1>
+<?endif;?>
 <div class="orderStatus"></div>
 <div class="emptyBasket"></div>
 

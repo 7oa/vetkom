@@ -1,6 +1,6 @@
 <h1>Заказы</h1>
 <?
-$time = strtotime('-1 month');//strtotime('-10 days');
+$time = strtotime('-1 year');//strtotime('-1 month');//strtotime('-10 days');
 $dateFrom = date("d.m.Y", $time);
 ?>
 <div class="row celectDate">
@@ -35,12 +35,10 @@ $dateFrom = date("d.m.Y", $time);
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="myModalLabel">Заказ №<span class="zakazNum"></span></h4>
             </div>
-            <div class="modal-body">
 
+            <div class="zakazInfo__inner">
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-            </div>
+
         </div>
     </div>
 </div>

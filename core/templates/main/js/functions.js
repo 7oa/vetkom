@@ -25,8 +25,6 @@
         $('a[data-toggle="tab"]:first').tab('show');
     }
 });*/
-//переключение на вкладку basket
-//$('a[href="#basket"]').tab('show');
 //Перевод в числовой формат
 function number_format(number, decimals, dec_point, thousands_sep) {
     number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
@@ -661,12 +659,12 @@ $(document).ready(function () {
             data: {number: number, date: date, guid: guid, TYPE: 'detail'},
             beforeSend: function () {
                 $(".zakazNum").text(number);
-                $("#zakazInfo .modal-body").empty()
+                $("#zakazInfo .zakazInfo__inner").empty()
                         .append("<div class='windows8'></div>");
             },
             success: function (data) {
                 $(".zakazNum").text(number);
-                $("#zakazInfo .modal-body").empty()
+                $("#zakazInfo .zakazInfo__inner").empty()
                         .append(data);
             }
         });
@@ -1148,4 +1146,37 @@ $(document).ready(function () {
 			});
 		}
 	});
+
+	//02.09.2017
+    $(document).on('click', '.modal .modal-close', function () {
+        $(this).closest('.modal').modal('hide');
+    });
+
+	//редактирование заказа
+    $(document).on('click', '#ajax-order-edit', function(){
+        var a = $(this);
+        var number = a.data("number");
+        var date = a.data("date");
+        $.ajax({
+            type: "POST",
+            url: orderUri,
+            data: {number: number, date: date, TYPE: 'edit'},
+            beforeSend: function () {
+                a.append("<div class='loaderSmall'></div>");
+                //a.addClass("disabled").removeClass("zakazRepeat");
+            },
+            success: function (data) {
+                backet_refresh();
+                $(".basketTableAjax").html('');
+                //alert(data);
+                $(".basketTableAjax").append(data);
+                $("#basket h1").html('Редактирование заказа '+number);
+                sum_refresh();
+                hide_button();
+                $('.modal').modal('hide');
+                $('a[href="#basket"]').tab('show');
+                //a.removeClass("disabled").addClass("zakazRepeat");
+            }
+        });
+    });
 });

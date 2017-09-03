@@ -159,6 +159,39 @@ switch ($type) {
         $basket = Basket::getInstance(false);
         Template::includeTemplate('basket_items', $basket);
         break;
+    case 'edit':
+        $detail = $order->getResult('GetOrder', $orderParams);
+        $ORDER_NUM = $detail["number"];
+        $ORDER_DATE = $detail["date"];
+        $userBasket=Basket::getItems($USER_ID);
+        if($userBasket){
+            foreach($userBasket as $arItems){
+                Basket::delete($arItems["ID"]);
+            }
+        }
+        foreach ($detail['strings'] as $option):
+            $product = array(
+                "PRODUCT_ID" => $option["id"],
+                "ART" => $option["art"],
+                "NAME" => $option["name"],
+                "PRICE" => $option["price"],
+                "QUANTITY" => $option["quantity"],
+                'USER_ID' => $USER_ID,
+            );
+            $item = Basket::addItemByProduct($product);
+        endforeach;
+        $basket = Basket::getInstance(false);
+        $connect = DataBase::getConnection();
+        $isedit = $connect->query("SELECT * FROM `order_edit` WHERE `USER_ID` = '$USER_ID'")->fetchRaw();
+        if(!empty($isedit)){
+            $connect->query("UPDATE `order_edit` SET ORDER_NUM='$ORDER_NUM', ORDER_DATE='$ORDER_DATE' WHERE ID='$isedit[ID]'");
+        }
+        else{
+            $connect->query("INSERT INTO `order_edit` (USER_ID, ORDER_NUM, ORDER_DATE) VALUES ('$USER_ID','$ORDER_NUM','$ORDER_DATE')");
+        }
+        //echo "<pre>"; print_r($basket); echo "</pre>";
+        Template::includeTemplate('basket_items', $basket);
+        break;
     case 'samples':
         $sname = $data['sname'];
         $detail = $order->getResult('GetOrder', $orderParams);

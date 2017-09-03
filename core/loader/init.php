@@ -4,7 +4,8 @@ include 'print_var.php';
 
 use Core\Main\DbSession,
     Core\Main\User,
-    Core\Main\Template;
+    Core\Main\Template,
+    Core\Main\DataBase;
 
 ini_set("session.cookie_httponly", "1");
 
@@ -70,6 +71,15 @@ if (isset($_POST['AUTH_FORM']) && $_POST['AUTH_FORM'] <> ''):
     if ($res !== 'false') {
         $result = User::login($login, md5($password), $res);
         if ($result) {
+            //удалим редактируемый заказ
+            $USER_ID = User::getID();
+            $connect = DataBase::getConnection();
+            $isedit = $connect->query("SELECT * FROM `order_edit` WHERE `USER_ID` = '$USER_ID'")->fetchRaw();
+            if(!empty($isedit)){
+                $connect->query("DELETE FROM `order_edit` WHERE `ID` = '$isedit[ID]'");
+                $connect->query("DELETE FROM `basket` WHERE `USER_ID` = '$USER_ID'");
+            }
+
             header("Location: " . '/');
         }
     } else {

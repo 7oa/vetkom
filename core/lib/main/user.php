@@ -2,7 +2,8 @@
 
 namespace Core\Main;
 
-use Core\Main\Visits;
+use Core\Main\Visits,
+    Core\Main\DataBase;
 
 class User extends DataManager {
 
