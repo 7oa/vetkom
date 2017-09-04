@@ -1,4 +1,5 @@
 <div class="modal-body">
+    <?//echo "<pre>"; print_r($arResult); echo "</pre>";?>
     <div class="pull-right text-right">
         <button type="button" class="btn btn-default saveSampleBlockByOrder" data-toggle="modal" data-target="#save_order_template">
             Сохранить заказ как шаблон
@@ -17,7 +18,7 @@
     <div class="clearfix"></div>
 
     <? if ($arResult["DOCS"]): ?>
-        <? //echo"<pre>";print_r($arResult["DOCS"]);echo"</pre>";?>
+
         <?
         if (!array_key_exists(0, $arResult["DOCS"]))
             $docs[] = $arResult["DOCS"];
@@ -131,7 +132,7 @@
                 Редактирование заказа приведет к очистке состава Текущего заказа. Продолжить?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default order-edit" id="ajax-order-edit" data-number="<?= $arResult["number"] ?>" data-date="<?= $arResult["date"] ?>">Продолжить</button>
+                <button type="button" class="btn btn-default order-edit" id="ajax-order-edit" data-number="<?= $arResult["number"] ?>" data-date="<?= $arResult["date"] ?>" data-guid="<?=$arResult["guid"]?>">Продолжить</button>
                 <button type="button" class="btn btn-default modal-close">Отмена</button>
             </div>
         </div>

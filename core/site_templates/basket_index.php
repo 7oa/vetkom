@@ -4,6 +4,13 @@ $arBacket = $arResult->getBasketItems();
 $USER_ID = User::getID();
 $userInfo = User::getByID($USER_ID);
 $orderNum = $arResult->getOrderNum();
+$orderDate = $arResult->getOrderDate();
+$orderGUID = $arResult->getOrderGUID();
+$shipType = $arResult->shipType;
+$shipAddr = $arResult->shipAddr;
+$comment1 = $arResult->comment;
+$comment = explode("\n Желаемая дата выполнения заказа: ", $comment1);
+
 $address=User::getInstance()->getResult('GetAddressesById', array('id' => $userInfo["EXTERNAL"]));
 if ($address){
     if (!is_array($address["Strings"]))
@@ -12,7 +19,6 @@ if ($address){
         $arAddr = $address["Strings"];
 }
 ?>
-<?//echo "<pre>";print_r($arResult);echo "</pre>";?>
 <?if($orderNum):?>
     <h1>Редактирование заказа <?=$orderNum?></h1>
 <?else:?>
@@ -66,8 +72,11 @@ if ($address){
 
     <div class="row desDate text-right">
 		<?
-		$time = strtotime('+1 day');
-		$desDate= date("d.m.Y", $time);
+            $time = strtotime('+1 day');
+            $desDate= date("d.m.Y", $time);
+            if($comment[1]){
+                $desDate = $comment[1];
+            }
 		?>
         <div class="col-sm-12">
             <h3>Желаемая дата выполнения заказа</h3>
@@ -91,11 +100,11 @@ if ($address){
         <div class="col-sm-12">
             <div class="radio deliveryRadio">
                 <label>
-                    <input type="radio" class="deliveryRadioOne" name="deliveryRadios" id="deliveryOptR1" value="0" data-id="0" checked>
+                    <input type="radio" class="deliveryRadioOne" name="deliveryRadios" id="deliveryOptR1" value="0" data-id="0" <?if($shipType != 1):?>checked<?endif;?>>
                     Самовывоз
                 </label>
                 <label>
-                    <input type="radio" class="deliveryRadioOne" name="deliveryRadios" id="deliveryOptR2" value="1" data-id="1">
+                    <input type="radio" class="deliveryRadioOne" name="deliveryRadios" id="deliveryOptR2" value="1" data-id="1"<?if($shipType == 1):?>checked<?endif;?>>
                     Нужна доставка
                 </label>
 <!--                <label>-->
@@ -107,7 +116,7 @@ if ($address){
 
 
 
-        <div class="col-sm-12 shipmentAddressBlock" style="display: none">
+        <div class="col-sm-12 shipmentAddressBlock" <?if($shipType != 1):?>style="display: none"<?endif;?>>
             <label for="shipAddress" class="text-left">Адрес доставки:</label><br/>
 
             <?if($arAddr):?>
@@ -117,7 +126,7 @@ if ($address){
                 <?endforeach;?>
             </select>
             <?else:?>
-                <input type="text" name="shipAddress" id="shipAddress" class="input600 form-control" placeholder="Введите адрес доставки">
+                <input type="text" name="shipAddress" id="shipAddress" class="input600 form-control" placeholder="Введите адрес доставки" <?if($shipAddr):?>value="<?=$shipAddr?>"<?endif;?>>
             <?endif;?>
         </div>
 
@@ -133,7 +142,7 @@ if ($address){
         </div>
 
         <div class="col-sm-12">
-            <textarea name="commentOrder" id="commentOrder" class="input600 form-control" placeholder="Ваш комментарий"></textarea>
+            <textarea name="commentOrder" id="commentOrder" class="input600 form-control" placeholder="Ваш комментарий"><?if($comment[0]) echo $comment[0]; ?></textarea>
         </div>
     </div>
 
@@ -143,7 +152,7 @@ if ($address){
         <button type="button" class="btn btn-default saveSampleBlock" data-toggle="modal" data-target="#save_template">
             Сохранить заказ как шаблон
         </button>
-        <button type="button" class="btn btn-primary checkout">
+        <button type="button" class="btn btn-primary checkout"<?if($orderNum):?> data-edit="true"<?endif;?><?if($orderNum):?> data-onum="<?=$orderNum?>"<?endif;?><?if($orderDate):?> data-odate="<?=$orderDate?>"<?endif;?><?if($orderGUID):?>data-guid="<?=$orderGUID?>"<?endif;?>>
             <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span> Оформить заказ
         </button>
     </div>

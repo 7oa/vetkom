@@ -1,6 +1,6 @@
 <h1>Заказы</h1>
 <?
-$time = strtotime('-1 year');//strtotime('-1 month');//strtotime('-10 days');
+$time = strtotime('-1 month');//strtotime('-10 days');
 $dateFrom = date("d.m.Y", $time);
 ?>
 <div class="row celectDate">

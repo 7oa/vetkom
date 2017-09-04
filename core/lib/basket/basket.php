@@ -4,10 +4,12 @@ namespace Core\Main;
 
 class Basket extends DataManager {
 
-    protected $items = array(),
+	protected $items = array(),
             $basketPrice = null,
             $orderNum = null,
-            $itemsCount = null;
+            $orderDate = null,
+            $itemsCount = null,
+			$orderGuid = null;
 
     function __construct() {
         $items = $this->getItems(User::getID());
@@ -17,6 +19,11 @@ class Basket extends DataManager {
         $isedit = $connect->query("SELECT * FROM `order_edit` WHERE `USER_ID` = '$USER_ID'")->fetchRaw();
         if(!empty($isedit)){
             $this->orderNum = $isedit["ORDER_NUM"];
+			$this->orderDate = $isedit["ORDER_DATE"];
+			$this->orderGuid = $isedit["ORDER_GUID"];
+			$this->shipType = $isedit["SHIP_TYPE"];
+			$this->shipAddr = $isedit["SHIP_ADDR"];
+			$this->comment = $isedit["COMMEN"];
         }
         if ($items) {
             foreach ($items as $arItem)
@@ -155,6 +162,14 @@ class Basket extends DataManager {
     public function getOrderNum(){
         return $this->orderNum;
     }
+
+	public function getOrderDate(){
+		return $this->orderDate;
+	}
+
+	public function getOrderGuid(){
+		return $this->orderGuid;
+	}
 
     public function getPrice() {
         return $this->formatePrice($this->basketPrice);

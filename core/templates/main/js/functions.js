@@ -749,11 +749,15 @@ $(document).ready(function () {
         var shipmentCompany=$("#shipmentCompany").val();
         var comment=$("#commentOrder").val();
         var desDate = $(".order-desdate").val();
+        var refresh = a.data("edit");
+		var orderNum = a.data("onum");
+		var orderDate = a.data("odate");
+		var orderGUID = a.data("guid");
         //a.addClass("disabled").removeClass("checkout");
         $.ajax({
             type: "POST",
             url: orderUri,
-            data: {TYPE: 'add', shipType: shipType, shipAddress: shipAddress, shipmentCompany: shipmentCompany, comment: comment, desDate: desDate},
+            data: {TYPE: 'add', shipType: shipType, shipAddress: shipAddress, shipmentCompany: shipmentCompany, comment: comment, desDate: desDate, refresh: refresh, orderNum: orderNum, orderDate: orderDate, orderGUID: orderGUID},
             beforeSend: function () {
                 //$(".backetDiv").empty();
                 $(".backetDiv").append("<div class='windows8'></div>");
@@ -815,7 +819,7 @@ $(document).ready(function () {
     function hide_button() {
         if ($(".tableBasket tr").length <= 1) {
             $(".backetDiv").hide();
-            $(".emptyBasket").show().text("Добавьте товар для формирования нового заказа.");
+            $(".emptyBasket").show().text("Добавьте товар для формирования заказа.");
         }
         else {
             $(".backetDiv").show();
@@ -1157,10 +1161,11 @@ $(document).ready(function () {
         var a = $(this);
         var number = a.data("number");
         var date = a.data("date");
+		var guid = a.data("guid");
         $.ajax({
             type: "POST",
             url: orderUri,
-            data: {number: number, date: date, TYPE: 'edit'},
+            data: {number: number, date: date, guid: guid, TYPE: 'edit'},
             beforeSend: function () {
                 a.append("<div class='loaderSmall'></div>");
                 //a.addClass("disabled").removeClass("zakazRepeat");
@@ -1168,9 +1173,13 @@ $(document).ready(function () {
             success: function (data) {
                 backet_refresh();
                 $(".basketTableAjax").html('');
-                //alert(data);
                 $(".basketTableAjax").append(data);
                 $("#basket h1").html('Редактирование заказа '+number);
+                $("button.checkout")
+					.attr("data-edit", true)
+					.attr("data-onum", number)
+					.attr("data-odate", date)
+					.attr("data-odate", guid);
                 sum_refresh();
                 hide_button();
                 $('.modal').modal('hide');

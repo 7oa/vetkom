@@ -27,7 +27,18 @@ $shipmentCompany = $data['shipmentCompany'];
 $comment = $data['comment'];
 switch ($type) {
     case 'add':
+    	//echo '<pre>'; print_r($data);echo "</pre>";
 		$desDate = $data['desDate'];
+		$refresh = false;
+		$orderNum = date('Y-m-d');
+		$orderDate = date('Y-m-d');
+		$orderGUID = '';
+		if($data['refresh']){
+			$orderNum = $data['orderNum'];
+			$orderDate = date('Y-m-d', strtotime($data['orderDate']));
+			$orderGUID = $data['orderGUID'];
+			$refresh = true;
+		}
 		$comment.= "\n Желаемая дата выполнения заказа: ".$desDate;
         $params = array('filter' => array('USER_ID' => $USER_ID));
         $dbBacket = Basket::getList($params);
@@ -45,8 +56,8 @@ switch ($type) {
             $orderPrice += ($arProducts["PRICE"] * $arProducts["QUANTITY"]);
         }
         $orderFields = array(
-            'number' => date('Y-m-d'),
-            'date' => date('Y-m-d'),
+            'number' => $orderNum,
+            'date' => $orderDate,
             'user_id' => $USER_EXTERNAL_ID,
             'sum' => $orderPrice,
             'status' => 'added',
@@ -60,14 +71,14 @@ switch ($type) {
             'shipmentAddress' => $shipAddress,
             'shipmentCompany' => $shipmentCompany,
             'comment' => $comment,
-            'guid' => ''
+            'guid' => $orderGUID
         );
-        $addFields = array('user_id' => $USER_EXTERNAL_ID, 'order' => $orderFields);
-        //echo "<pre>"; print_r($addFields); echo "</pre>";
+        $addFields = array('user_id' => $USER_EXTERNAL_ID, 'order' => $orderFields, 'refresh' => $refresh);
+        echo "<pre>"; print_r($addFields); echo "</pre>";
         $result = $order->getResult('AddOrder', $addFields);
         if ($result[0] == "Документ оформлен!") {
 
-            User::sendEmail($arUser, $backet, $result[1], true);
+            if(!$refresh) User::sendEmail($arUser, $backet, $result[1], true);
 
             foreach ($backet as $arProducts) {
                 Basket::delete($arProducts['ID']);
@@ -140,6 +151,7 @@ switch ($type) {
             else
                 $oneProduct['favorits'] = $check_favorits['TYPE'];
         }
+		$detail["guid"] = $guid;
         Template::includeTemplate('order_detail', $detail);
         break;
     case 'repeate':
@@ -163,6 +175,10 @@ switch ($type) {
         $detail = $order->getResult('GetOrder', $orderParams);
         $ORDER_NUM = $detail["number"];
         $ORDER_DATE = $detail["date"];
+		$ORDER_GUID = $data["guid"];
+		$SHIP_TYPE = $detail["shipmentType"];
+		$SHIP_ADDR = $detail["shipmentAddress"];
+		$COMMENT = $detail["comment"];
         $userBasket=Basket::getItems($USER_ID);
         if($userBasket){
             foreach($userBasket as $arItems){
@@ -184,12 +200,13 @@ switch ($type) {
         $connect = DataBase::getConnection();
         $isedit = $connect->query("SELECT * FROM `order_edit` WHERE `USER_ID` = '$USER_ID'")->fetchRaw();
         if(!empty($isedit)){
-            $connect->query("UPDATE `order_edit` SET ORDER_NUM='$ORDER_NUM', ORDER_DATE='$ORDER_DATE' WHERE ID='$isedit[ID]'");
+            $connect->query("UPDATE `order_edit` SET ORDER_NUM='$ORDER_NUM', ORDER_DATE='$ORDER_DATE', ORDER_GUID='$ORDER_GUID', SHIP_TYPE='$SHIP_TYPE', SHIP_ADDR='$SHIP_ADDR', COMMEN='$COMMENT' WHERE ID='$isedit[ID]'");
         }
         else{
-            $connect->query("INSERT INTO `order_edit` (USER_ID, ORDER_NUM, ORDER_DATE) VALUES ('$USER_ID','$ORDER_NUM','$ORDER_DATE')");
+            $connect->query("INSERT INTO `order_edit` (USER_ID, ORDER_NUM, ORDER_DATE, ORDER_GUID, SHIP_TYPE, SHIP_ADDR, COMMEN) VALUES ('$USER_ID','$ORDER_NUM','$ORDER_DATE','$ORDER_GUID','$SHIP_TYPE','$SHIP_ADDR','$COMMENT')");
         }
-        //echo "<pre>"; print_r($basket); echo "</pre>";
+		//echo "<pre>"; print_r($detail); echo "</pre>";
+
         Template::includeTemplate('basket_items', $basket);
         break;
     case 'samples':
