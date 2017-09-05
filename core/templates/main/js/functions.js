@@ -776,9 +776,16 @@ $(document).ready(function () {
                     $("#shipAddress").val("");
                     $("#commentOrder").val("");
                     $(".blackBack").hide();
+                    $("#basket h1").html("Текущий заказ");
+
                     backet_refresh();
                     sum_refresh();
                     hide_button();
+					a.data("edit","")
+						.data("onum","")
+						.data("odate","")
+						.data("guid","");
+
                 }
                 else{
                     $(".blackBack").hide();
@@ -788,7 +795,7 @@ $(document).ready(function () {
 
             }
         });
-
+		console.log($(".checkout").data("edit"));
     });
     //Повторить заказ
     $(document).on('click', '.zakazRepeat', function () {
@@ -1177,6 +1184,9 @@ $(document).ready(function () {
                 $('.modal').modal('hide');
                 $('a[href="#basket"]').tab('show');
                 a.removeClass("disabled").addClass("ajax-order-edit");
+				$('.selectDate').datetimepicker(
+					{pickTime: false, language: 'ru'}
+				);
             }
         });
     });

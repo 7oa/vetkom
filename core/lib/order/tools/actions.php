@@ -35,7 +35,7 @@ switch ($type) {
 		$orderGUID = '';
 		if($data['refresh']){
 			$orderNum = $data['orderNum'];
-			$orderDate = date('Y-m-d', strtotime($data['orderDate']));
+			//$orderDate = date('Y-m-d', strtotime($data['orderDate']));
 			$orderGUID = $data['orderGUID'];
 			$refresh = true;
 		}
@@ -74,10 +74,13 @@ switch ($type) {
             'guid' => $orderGUID
         );
         $addFields = array('user_id' => $USER_EXTERNAL_ID, 'order' => $orderFields, 'refresh' => $refresh);
-        echo "<pre>"; print_r($addFields); echo "</pre>";
+        //echo "<pre>"; print_r($addFields); echo "</pre>";
         $result = $order->getResult('AddOrder', $addFields);
         if ($result[0] == "Документ оформлен!") {
-
+			if($refresh){
+				$connect = DataBase::getConnection();
+				$connect->query("DELETE FROM `order_edit` WHERE `USER_ID` = '$USER_ID'");
+			}
             if(!$refresh) User::sendEmail($arUser, $backet, $result[1], true);
 
             foreach ($backet as $arProducts) {

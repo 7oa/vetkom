@@ -83,7 +83,7 @@ if ($address){
             <h3>Желаемая дата выполнения заказа</h3>
         </div>
         <div class="col-sm-3 col-sm-offset-9">
-            <div class="input-group selectDate" id="zakazDateTo">
+            <div class="input-group selectDate" id="zDate">
                 <input type="text" class="form-control order-desdate" value="<?=$desDate;?>">
                 <span class="input-group-btn">
                     <button class="btn btn-default" type="button"><span class="glyphicon-calendar glyphicon"></span></button>
