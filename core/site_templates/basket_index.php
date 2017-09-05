@@ -19,6 +19,7 @@ if ($address){
         $arAddr = $address["Strings"];
 }
 ?>
+<?//echo "<pre>"; print_r($arResult); echo "</pre>";?>
 <?if($orderNum):?>
     <h1>Редактирование заказа <?=$orderNum?></h1>
 <?else:?>

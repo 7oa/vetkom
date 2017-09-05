@@ -6,10 +6,7 @@ class Basket extends DataManager {
 
 	protected $items = array(),
             $basketPrice = null,
-            $orderNum = null,
-            $orderDate = null,
-            $itemsCount = null,
-			$orderGuid = null;
+            $itemsCount = null;
 
     function __construct() {
         $items = $this->getItems(User::getID());

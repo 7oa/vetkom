@@ -1157,7 +1157,7 @@ $(document).ready(function () {
     });
 
 	//редактирование заказа
-    $(document).on('click', '#ajax-order-edit', function(){
+    $(document).on('click', '.ajax-order-edit', function(){
         var a = $(this);
         var number = a.data("number");
         var date = a.data("date");
@@ -1168,23 +1168,15 @@ $(document).ready(function () {
             data: {number: number, date: date, guid: guid, TYPE: 'edit'},
             beforeSend: function () {
                 a.append("<div class='loaderSmall'></div>");
-                //a.addClass("disabled").removeClass("zakazRepeat");
+                a.addClass("disabled").removeClass("ajax-order-edit");
             },
             success: function (data) {
                 backet_refresh();
-                $(".basketTableAjax").html('');
-                $(".basketTableAjax").append(data);
-                $("#basket h1").html('Редактирование заказа '+number);
-                $("button.checkout")
-					.attr("data-edit", true)
-					.attr("data-onum", number)
-					.attr("data-odate", date)
-					.attr("data-odate", guid);
-                sum_refresh();
-                hide_button();
+                $("#basket").html('')
+					.append(data);
                 $('.modal').modal('hide');
                 $('a[href="#basket"]').tab('show');
-                //a.removeClass("disabled").addClass("zakazRepeat");
+                a.removeClass("disabled").addClass("ajax-order-edit");
             }
         });
     });

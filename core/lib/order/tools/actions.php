@@ -206,8 +206,13 @@ switch ($type) {
             $connect->query("INSERT INTO `order_edit` (USER_ID, ORDER_NUM, ORDER_DATE, ORDER_GUID, SHIP_TYPE, SHIP_ADDR, COMMEN) VALUES ('$USER_ID','$ORDER_NUM','$ORDER_DATE','$ORDER_GUID','$SHIP_TYPE','$SHIP_ADDR','$COMMENT')");
         }
 		//echo "<pre>"; print_r($detail); echo "</pre>";
-
-        Template::includeTemplate('basket_items', $basket);
+		$basket->orderDate = $ORDER_DATE;
+		$basket->orderGuid = $ORDER_GUID;
+		$basket->orderNum = $ORDER_NUM;
+		$basket->shipType = $SHIP_TYPE;
+		$basket->shipAddr = $SHIP_ADDR;
+		$basket->comment = $COMMENT;
+        Template::includeTemplate('basket_index', $basket);
         break;
     case 'samples':
         $sname = $data['sname'];

@@ -132,7 +132,7 @@
                 Редактирование заказа приведет к очистке состава Текущего заказа. Продолжить?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default order-edit" id="ajax-order-edit" data-number="<?= $arResult["number"] ?>" data-date="<?= $arResult["date"] ?>" data-guid="<?=$arResult["guid"]?>">Продолжить</button>
+                <button type="button" class="btn btn-default order-edit ajax-order-edit" data-number="<?= $arResult["number"] ?>" data-date="<?= $arResult["date"] ?>" data-guid="<?=$arResult["guid"]?>">Продолжить</button>
                 <button type="button" class="btn btn-default modal-close">Отмена</button>
             </div>
         </div>
