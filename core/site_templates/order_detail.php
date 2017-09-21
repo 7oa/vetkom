@@ -6,15 +6,18 @@
         </button>
         <button type="button" class="btn btn-default zakazRepeat" data-number="<?= $arResult["number"] ?>" data-date="<?= $arResult["date"] ?>" data-form="custom">Повторить заказ</button>
         <br/><br/>
+
         <button type="button" class="btn btn-primary zakazPrint" data-number="<?= $arResult["number"] ?>" data-date="<?= $arResult["date"] ?>" data-form="ext_ReconcilementOrder"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Заказ согласование</button>
-        <button type="button" class="btn btn-primary zakazPrint" data-number="<?= $arResult["number"] ?>" data-date="<?= $arResult["date"] ?>" data-form="paymentInvoice"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Счет на оплату </button>
-        <? if ($arResult["DEF_PRICE"] == "1"): ?>
-            <button type="button" class="btn btn-primary zakazPrint" data-number="<?= $arResult["number"] ?>" data-date="<?= $arResult["date"] ?>" data-form="custom_prices"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Счет на оплату с розничными ценами </button>
-        <? endif; ?>
+		<?if ($arResult["Protected"]!=1):?>
+            <button type="button" class="btn btn-primary zakazPrint" data-number="<?= $arResult["number"] ?>" data-date="<?= $arResult["date"] ?>" data-form="paymentInvoice"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Счет на оплату </button>
+            <? if ($arResult["DEF_PRICE"] == "1"): ?>
+                <button type="button" class="btn btn-primary zakazPrint" data-number="<?= $arResult["number"] ?>" data-date="<?= $arResult["date"] ?>" data-form="custom_prices"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Счет на оплату с розничными ценами </button>
+            <? endif; ?>
+		<? endif; ?>
     </div>
     <strong>Доставка:</strong> <?= $arResult["shipmentType"] ?><br/>
     <strong>Адрес доставки:</strong> <?= $arResult["shipmentAddress"] ?><br/>
-    <? if ($arResult["comment"]): ?><strong>Комментарий:</strong> <?= $arResult["comment"] ?><br/><? endif; ?>
+    <? /*if ($arResult["comment"]): ?><strong>Комментарий:</strong> <?= $arResult["comment"] ?><br/><? endif; */?>
     <div class="clearfix"></div>
 
     <? if ($arResult["DOCS"]): ?>

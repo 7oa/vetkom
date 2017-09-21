@@ -71,7 +71,8 @@ switch ($type) {
             'shipmentAddress' => $shipAddress,
             'shipmentCompany' => $shipmentCompany,
             'comment' => $comment,
-            'guid' => $orderGUID
+            'guid' => $orderGUID,
+			'Protected' => ''
         );
         $addFields = array('user_id' => $USER_EXTERNAL_ID, 'order' => $orderFields, 'refresh' => $refresh);
         //echo "<pre>"; print_r($addFields); echo "</pre>";
@@ -155,6 +156,7 @@ switch ($type) {
                 $oneProduct['favorits'] = $check_favorits['TYPE'];
         }
 		$detail["guid"] = $guid;
+		//echo "<pre>"; print_r($detail); echo "</pre>";
         Template::includeTemplate('order_detail', $detail);
         break;
     case 'repeate':
@@ -257,6 +259,7 @@ switch ($type) {
     case 'detailPayment':
         $params = array('name' => $data["name"], 'guid' => $data["guid"]);
         $arResult = $payment->getResult('GetDocumentDetails', $params);
+		//echo "<pre>"; print_r($arResult); echo "</pre>";
         Template::includeTemplate('detailpayments', $arResult);
         break;
     case 'paymentList':
@@ -264,8 +267,9 @@ switch ($type) {
         $to = date('Y-m-d', strtotime($data["dto"]));
         $params = array('user_id' => $USER_EXTERNAL_ID, 'date1' => $from, 'date2' => $to);
         $docs = $payment->getResult('GetMutualPayments', $params);
-        if ($docs['Documents'])
-            krsort($docs['Documents']);
+		//echo "<pre>"; print_r($docs); echo "</pre>";
+        /*if ($docs['Documents'])
+            krsort($docs['Documents']);*/
         Template::includeTemplate('docs_list', $docs);
         break;
 }
