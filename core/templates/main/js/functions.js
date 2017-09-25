@@ -1133,7 +1133,7 @@ $(document).ready(function () {
 		});
 	});
 	//список брендов
-	$(document).on('click', '.ajax-brend-alph', function(){
+	$(document).on('click', '.ajax-brend-alph', function(e){
 		var a = $(this);
 		var isGroup = a.data("group");
 		if(!isGroup){
@@ -1144,7 +1144,10 @@ $(document).ready(function () {
 				url: catalogUri,
 				data: {letter: letter, id: id, TYPE: 'allBrends'},
 				beforeSend: function () {
-					if(id) $("body").animate({"scrollTop":0},"slow");
+					if(id){
+						e.preventDefault();
+						$('html, body').animate({scrollTop: 0}, "slow");
+					}
 					if($(a).hasClass("opnBrends")) $(".ajax-brends").empty();
 					$(".divTable").empty();
 					$(".divTable").append("<div class='windows8'></div>");
