@@ -47,7 +47,12 @@ if ($isAuthPage) {
             <div class="wrapper">
                 <div class="container fix" id="header">
                     <div class="firstHeadLine">
-                        <div class="logo"><a href="/"><img src="<?= TEMPLATE_PATH ?><?= $GLOBALS['config']['logoDir'] ?>"></a></div>
+                        <div class="logo">
+                            <a href="/">
+                                <img src="<?= TEMPLATE_PATH ?><?= $GLOBALS['config']['logoDir'] ?>">
+                                <span>ВТК</span>
+                            </a>
+                        </div>
                         <div class="text-right topInfo">
                             <div class="login"><?= $userInfo['ORGANIZATION'] ?> <br/><?= $userInfo['CONTACTPERSON'] ?>, <a href="?logout=yes">Выйти</a></div>
 

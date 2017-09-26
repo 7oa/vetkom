@@ -26,7 +26,10 @@
     </button>
 
 	<div class="footerLogo">
-		<a href="http://sysopt.ru/" target="_blank"><img src="<?= TEMPLATE_PATH ?>/images/logo_sysopt.png" alt="Система оптового самообслуживания"></a>
+		<a href="http://sysopt.ru/" target="_blank">
+            <img src="<?= TEMPLATE_PATH ?><?= $GLOBALS['config']['logoDir'] ?>">
+            <span>ВТК</span>
+        </a>
 	</div>
 
 
