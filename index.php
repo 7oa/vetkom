@@ -37,12 +37,8 @@ $basket = Basket::getInstance(false);
         <? Template::includeTemplate('payments_index'); ?>
     </div>
 
-    <div class="row tab-pane" id="samples">
-        <? Template::includeTemplate('samples_index'); ?>
-    </div>
-
-    <div class="row tab-pane" id="favorits">
-        <? Template::includeTemplate('favorit_index'); ?>
+    <div class="row tab-pane" id="stock">
+        <? Template::includeTemplate('stock_index'); ?>
     </div>
 
 	<?php } ?>

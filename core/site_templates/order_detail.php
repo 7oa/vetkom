@@ -63,25 +63,6 @@
             ?>
             <tr>
                 <td>
-                    <div class="pull-right">
-                        <button
-                            data-id="<?= $option['id'] ?>"
-                            data-price="<?= $option["price"] ?>"
-                            data-name="<?= $option['name'] ?>"
-                            data-quantity="<?= $option['quantity'] ?>"
-                            data-art="<?= $option['art'] ?>"
-                            class="btn btn-xs btn-default favoritKey"
-                            type="button"
-                            title="Добавить в избранное">
-                            <span
-                            <?php if ($option['favorits'] == 0) { ?>
-                                    class="glyphicon glyphicon-star-empty"
-                                <?php } else { ?>
-                                    class="glyphicon glyphicon-star"
-                                <?php } ?>
-                                ></span>
-                        </button>
-                    </div>
                     <?= $option['name']; ?>
                     <br/><small class="art"><?= $option['art']; ?></small>
                 </td>

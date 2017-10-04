@@ -12,9 +12,6 @@
         <thead>
             <tr>
                 <th>Название</th>
-                <? if ($_COOKIE['SHOW_S'] !== 'N'): ?>
-                    <th width="80">Кол-во</th>
-                <? endif; ?>
                 <th width="100">Цена</th>
                 <th width="80">Аналоги</th>
                 <? if ($arResult["DEF_PRICE"] == 1): ?><th width="100">Розничная</th><? endif; ?>
@@ -35,28 +32,6 @@
 				<?foreach($arGroup as $pr_key=>$oneProduct):?>
                     <tr data-id="<?= $oneProduct["id"] ?>" class="element" data-key="<?=$key?>">
                         <td>
-                            <div class="pull-right">
-                                <button
-                                        data-id="<?= $oneProduct['id'] ?>"
-                                        data-price="<?= $oneProduct["price"] ?>"
-                                        data-name='<?= $oneProduct['name'] ?>'
-                                        data-quantity="<?= $oneProduct['quantity'] ?>"
-                                        data-art="<?= $oneProduct['art'] ?>"
-                                        class="btn btn-xs btn-default favoritKey"
-                                        type="button"
-                                        data-toggle="tooltip"
-                                        data-placement="top"
-                                        title="Добавить в избранное">
-                                <span
-									<?php if ($oneProduct['favorits'] == 0) { ?>
-                                        class="glyphicon glyphicon-star-empty"
-									<?php } else { ?>
-                                        class="glyphicon glyphicon-star"
-									<?php } ?>
-                                ></span>
-                                </button>
-                            </div>
-
 							<?if($oneProduct["img_path"]):?>
                                 <img src="<?=$oneProduct["img_path"]?>" alt="" class="element__prev-img">
 							<?endif;?>
@@ -65,9 +40,6 @@
                             <br/><small class="art"><?= $oneProduct["art"] ?></small>
 
                         </td>
-						<? if ($_COOKIE['SHOW_S'] !== 'N'): ?>
-                            <td class="text-right"><a href="#detailCity" class="moreByCity" data-toggle="modal" data-id="<?= $oneProduct["id"] ?>"><?= $oneProduct["quantity"] ?></a></td>
-						<? endif; ?>
                         <td class="text-right"><?= number_format($oneProduct["price"], 2, '.', ''); ?></td>
                         <td class="text-center">
                             <button type="button" class="btn btn-default openAnalogModal" data-id="<?= $oneProduct['id'] ?>" data-toggle="modal" data-target="#analogModal"><span class="glyphicon glyphicon-transfer"></span></button>

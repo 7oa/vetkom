@@ -84,9 +84,9 @@ switch ($data['TYPE']) {
         $id = $data["id"];
         $findParams = array('req' => "code", 'value' => $id, 'price_id' => $price_id, 'priceGroupDetal' => $group_det, 'agreement_id' => $agreement);
         $soapCart = $catalog->getResult('GetProductDetails', $byID, true);
-        $find = $catalog->getResult('FindProductsBy', $findParams);
+        //$find = $catalog->getResult('FindProductsBy', $findParams);
         $detailCard = $soapCart[0];
-        $detailCard['price'] = $find['Products']["price"];
+        //$detailCard['price'] = $find['Products']["price"];
         if (!empty($detailCard['img']))
             $detailCard['img'] = $catalog->checkDetailImage($detailCard);
         $skocks = $catalog->getResult('GetStocksByProduct', array('id' => $id));

@@ -13,8 +13,8 @@ if ($isAuthPage) {
 <html>
     <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-        <title>Система самообслуживания оптовых клиентов</title>
-        <link rel="icon" type="image/png" href="<?= TEMPLATE_PATH ?>/images/favicon.png" />
+        <title>ВТК</title>
+        <link rel="icon" type="image/png" href="<?= TEMPLATE_PATH ?>/images/favicon2.png" />
         <link rel="stylesheet" href="<?= TEMPLATE_PATH ?>/css/bootstrap.min.css">
         <link rel="stylesheet" href="<?= TEMPLATE_PATH ?>/css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="<?= TEMPLATE_PATH ?>/css/bootstrap-datetimepicker.min.css">
@@ -67,8 +67,7 @@ if ($isAuthPage) {
                                 <li><a href="#basket" data-toggle="tab" class="backetLink">Текущий заказ <span class="badge countCol"><?= $basket->getItemsCount() ?></span></a></li>
                                 <li><a href="#orders" class="tab-orders" data-toggle="tab">Заказы</a></li>
                                 <li><a href="#payments" data-toggle="tab">Взаиморасчеты</a></li>
-                                <li><a href="#samples" data-toggle="tab" class="tab-samples">Шаблоны</a></li>
-                                <li><a href="#favorits" class="tab-favorits" data-toggle="tab">Избранное</a></li>
+                                <li><a href="#stock" data-toggle="tab" class="tab-samples">Акции</a></li>
                             </ul>
 
                         </div>
