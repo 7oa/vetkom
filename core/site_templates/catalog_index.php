@@ -64,6 +64,9 @@ if($docs["bindata"]) {
     </div>
     <div class="brends-wrapper ajax-brends"></div>
     <div class="divTable">
+        <?if (((date(G)<10)||(date(G)>=19))):?>
+            <div class="alert alert-info"><strong>Обращаем Ваше внимание:</strong> не все цены на данный момент актуальны, проверяйте обновление прайса в 10.00 утра (время Мск).</div>
+        <?endif;?>
 		<div class="catalogHelp">Выберите товар из каталога<br>или воспользуйтесь поиском</div>
     </div>
 
