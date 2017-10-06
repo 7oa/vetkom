@@ -69,10 +69,11 @@ if ($isAuthPage) {
                                 <li><a href="#payments" data-toggle="tab">Взаиморасчеты</a></li>
                                 <li><a href="#stock" data-toggle="tab" class="tab-samples">Акции</a></li>
                             </ul>
-
+                            <div class="price js-price">Скачать прайс-лист</div>
                         </div>
                     </div>
                     <?endif;?>
+
                 </div>
                 
                 <div class="modal fade" id="userInfo" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">

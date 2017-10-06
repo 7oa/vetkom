@@ -1193,4 +1193,25 @@ $(document).ready(function () {
             }
         });
     });
+
+    $(document).on('click', '.js-price', function(){
+        var a = $(this);
+        var win = window.open("/load.html");
+        $.ajax({
+            type: "POST",
+            url: catalogUri,
+            data: {TYPE: 'price'},
+            beforeSend: function () {
+                a.append("<div class='loaderSmall'></div>");
+                a.addClass("disabled").removeClass("js-price");
+            },
+            success: function (data) {
+                a.find(".loaderSmall").remove();
+                a.removeClass("disabled").addClass("js-price");
+                var link = '<div style="padding-top: 40px; text-align: center; font-size: 20px;"><a href='+data+'>Скачать прайс-лист</a></div>';
+                $(".load", win.document).remove();
+                $("body", win.document).append(link);
+            }
+        });
+    });
 });

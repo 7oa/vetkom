@@ -14,6 +14,7 @@ $price_id = $arUser["PRICE"];
 $def_price = $arUser["SHOWDEFAULTPRICE"];
 $group_det = "false"; //$arUser["PRICEGROUPDETAL"];
 $agreement = $arUser["AGREEMENT"];
+$USER_EXTERNAL_ID = $arUser["EXTERNAL"];
 $type = $data['TYPE'];
 $catalog = Catalog::getInstance();
 $byID = array('id' => $data["id"], 'price_id' => $price_id);
@@ -125,5 +126,11 @@ switch ($data['TYPE']) {
             $detailCard["STOCK"] = $skocks["Stocks"];
         }
         Template::includeTemplate('quantity_detail', $skocks);
+        break;
+    case 'price':
+        $params = array('user_id' => $USER_EXTERNAL_ID);
+        $print = $catalog->getResult('PrintPrice', $params, true);
+        $url = $catalog->checkXLS($print, 'price_'.$USER_EXTERNAL_ID);
+        echo $url;
         break;
 }

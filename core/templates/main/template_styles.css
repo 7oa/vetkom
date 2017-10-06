@@ -413,3 +413,21 @@ table#favoritSort thead tr .headerSortUp {
 	max-height: 100px;
 	margin-right: 10px;
 }
+.price{
+    color: #fff;
+    display: inline-block;
+    margin-left: 20px;
+    margin-top: 8px;
+    background-image: url('images/price.png');
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-size: contain;
+    padding-right: 40px;
+    height: 35px;
+    line-height: 40px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.price .loaderSmall{
+    margin-top: 8px;
+}

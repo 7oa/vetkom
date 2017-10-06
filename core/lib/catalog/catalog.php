@@ -21,6 +21,15 @@ class Catalog extends DataManager {
         return $arResult;
     }
 
+    public function checkXLS($doc, $filename) {
+        $filename = $this->translit($filename);
+        $name = $_SERVER['DOCUMENT_ROOT'] . '/docs/' . $filename . '.xls';
+        $file = iconv('utf-8', 'windows-1251', $name);
+        file_put_contents($file, $doc["objectBinary"]);
+        $path = '/docs/' . $filename . '.xls';
+        return $path;
+    }
+
     public function checkDetailImage($product) {
         $filename=$this->translit($product["id"]);
         $img = $_SERVER['DOCUMENT_ROOT'] . '/images/' . $filename . '.' . $product["img_ext"];
