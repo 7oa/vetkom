@@ -18,6 +18,7 @@ class Soap {
             );
 
         ini_set("soap.wsdl_cache_enabled", "0");
+        ini_set("default_socket_timeout", "300");
         $this->soapObject = new \SoapClient($this->soapUrl, $this->parameters);
         $this->soapTypes = $this->decodeTypes();
     }

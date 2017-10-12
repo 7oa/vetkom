@@ -431,3 +431,21 @@ table#favoritSort thead tr .headerSortUp {
 .price .loaderSmall{
     margin-top: 8px;
 }
+.stock{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+.stock__item{
+    width: 575px;
+    margin-bottom: 20px;
+    flex: 0 0 auto;
+    margin-right: 20px;
+    text-align: center;
+}
+.stock__item:nth-child(2n){
+    margin-right: 0px;
+}
+.stock__item img{
+    max-width: 575px;
+}
